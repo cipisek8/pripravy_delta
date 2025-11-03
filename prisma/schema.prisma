@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Preparations {
+  id              String   @id @default(cuid())
+  userId          String
+  year            String?
+  fieldId         String?
+  theme           String?
+  goals           String?
+  times           Json?      // array of { subtheme, time }
+  totalTime       Int?
+  content         String?    // Markdown
+  createdAt       DateTime  @default(now())
+  uploaded        Boolean   @default(false)
+  reviewing       Boolean   @default(false)
+}
+
+model Fields {
+  id              String   @id @default(cuid())
+  name            String
+}
