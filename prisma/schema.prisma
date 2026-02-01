@@ -8,22 +8,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Preparations {
-  id              String   @id @default(cuid())
-  userId          String
-  year            String?
-  fieldId         String?
-  theme           String?
-  goals           String?
-  times           Json?      // array of { subtheme, time }
-  totalTime       Int?
-  content         String?    // Markdown
-  createdAt       DateTime  @default(now())
-  uploaded        Boolean   @default(false)
-  reviewing       Boolean   @default(false)
+model Fields {
+  id   String @id
+  name String
 }
 
-model Fields {
-  id              String   @id @default(cuid())
-  name            String
+model Grades {
+  id   Int    @id
+  name String
+}
+
+model RVP {
+  code String @id
+  name String
+}
+
+model Preparations {
+  id           String   @id @default(cuid())
+  userId       String?  @db.Uuid
+  fieldId      String?  @db.Text
+  name         String?  @db.Text
+  teachingAids String?  @db.Text
+  goals        String?  @db.Text
+  gradeId      Int?
+  times        Json?
+  totalTime    Int?
+  content      String?  @db.Text
+  RVPCodes     String[] // Postgres text[]
+  createdat    DateTime @default(now())
+  uploaded     Boolean  @default(false)
+  reviewing    Boolean  @default(false)
 }

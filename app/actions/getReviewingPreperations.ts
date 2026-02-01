@@ -8,8 +8,8 @@ interface Filters {
   theme?: string
 }
 
-export async function getPreparations(filters: Filters = {}) {
-  const where: any = { uploaded: true }
+export async function getReviewingPreparations(filters: Filters = {}) {
+  const where: any = { reviewing: true }
 
   if (filters.year) where.year = filters.year
   if (filters.fieldId) where.fieldId = { startsWith: filters.fieldId }

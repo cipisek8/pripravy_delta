@@ -8,9 +8,14 @@ export async function getFields() {
       id: true,
       name: true,
     },
+    orderBy: {
+      id: "asc",
+    },
   });
 
   return fields.reduce((acc, field) => {
+    if(field.id.includes('-')) acc[field.id] = "-- "+field.name;
+    else
     acc[field.id] = field.name;
     return acc;
   }, {} as Record<string, string>);

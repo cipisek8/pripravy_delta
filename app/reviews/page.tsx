@@ -1,16 +1,18 @@
-import { getPreparations } from '@/app/actions/getPreparations'
 import { FieldOptions } from '@/components/field-options';
 import { getField } from '@/app/actions/getField';
 import { getGrade } from '@/app/actions/getGrade';
 import { GradeOptions } from '@/components/grade-options';
+import { getRole } from '@/app/actions/getRole';
+import { getReviewingPreparations } from '@/app/actions/getReviewingPreperations';
 
-export default async function PreparationsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default async function ReviewsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const filters = {
   gradeId: searchParams.gradeId,
   fieldId: searchParams.fieldId,
   name: searchParams.name,
 }
-  const preparations = await getPreparations(filters);
+  const preparations = await getReviewingPreparations(filters);
+  if(await getRole() !== 'reviewer') return (<><h1>nemate pristup</h1></>)
 
   return (
     <div className="p-8">
@@ -31,7 +33,7 @@ export default async function PreparationsPage({ searchParams }: { searchParams:
           Filter
         </button>
       </form>
-      <h1 className="text-2xl font-bold mb-6">Přípravy</h1>
+      <h1 className="text-2xl font-bold mb-6">Přípravy k hodnocení</h1>
       
       {preparations.length === 0 ? (
         <p>Žádné přípravy nebyly nalezeny.</p>
@@ -47,13 +49,13 @@ export default async function PreparationsPage({ searchParams }: { searchParams:
             </div>
             <div className="flex gap-2">
               <a
-                href={`/preparations/${prep.id}`}
+                href={`/reviews/${prep.id}`}
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
                 Otevřít
               </a>
               <a
-                href={`/preparations/${prep.id}/export`}
+                href={`/reviews/${prep.id}/export`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800"
