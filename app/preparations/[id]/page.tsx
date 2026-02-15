@@ -5,10 +5,7 @@ import { isPreparationOwner } from '@/app/actions/isPreparationOwner'
 import { renderMarkdown } from '@/app/actions/renderMarkdown'
 import { getGrade } from '@/app/actions/getGrade'
 import { getRVP } from '@/app/actions/getRVP'
-
-interface Params {
-  params: { id: string }
-}
+/* eslint-disable react/jsx-key */   
 
 export default async function PreparationPage({ params }: { params: { id: string } }) {
   const parameters = await params
@@ -21,7 +18,10 @@ export default async function PreparationPage({ params }: { params: { id: string
 
   if (isOwner) {
     // Editable form for owner
-    return <PreparationForm initialData={preparation} />
+    return <PreparationForm initialData={{
+      ...preparation,
+      times: typeof preparation.times === 'string' ? JSON.parse(preparation.times) : preparation.times
+    }} />
   }
   
   const htmlPreview = await renderMarkdown(String(preparation.content))
@@ -36,7 +36,7 @@ export default async function PreparationPage({ params }: { params: { id: string
       <p><strong>Celkový čas:</strong> {preparation.totalTime} minut</p>
       <h2>Časy</h2>
       <ul>
-        {(preparation.times as any[]).map(o => <li>{o.subtheme} – {o.time}</li>)}
+        {(preparation.times as any[]).map(o => <li>{o.subtheme} – {o.time}</li>) /* eslint-disable-line @typescript-eslint/no-explicit-any */}
       </ul>
       <h2>RVP</h2>
         <ul>

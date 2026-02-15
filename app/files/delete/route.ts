@@ -1,6 +1,5 @@
-import { deleteFile } from "@/app/actions/deleteFile";
 import { createClient } from "@/lib/supabase/server";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { filePath } = await req.json();

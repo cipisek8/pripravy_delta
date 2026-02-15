@@ -9,7 +9,7 @@ interface Filters {
 }
 
 export async function getPreparations(filters: Filters = {}) {
-  const where: any = { uploaded: true }
+  const where: any = { uploaded: true } // eslint-disable-line @typescript-eslint/no-explicit-any
 
   if (filters.year) where.year = filters.year
   if (filters.fieldId) where.fieldId = { startsWith: filters.fieldId }

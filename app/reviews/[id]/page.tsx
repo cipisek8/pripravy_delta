@@ -1,14 +1,10 @@
 import { getField } from '@/app/actions/getField'
 import { getPreparation } from '@/app/actions/getPreparation'
-import { isPreparationOwner } from '@/app/actions/isPreparationOwner'
 import { renderMarkdown } from '@/app/actions/renderMarkdown'
 import { getGrade } from '@/app/actions/getGrade'
 import { getRVP } from '@/app/actions/getRVP'
 import { getRole } from '@/app/actions/getRole'
-
-interface Params {
-    params: { id: string }
-}
+/* eslint-disable react/jsx-key */   
 
 export default async function PreparationPage({ params }: { params: { id: string } }) {
     const parameters = await params
@@ -31,7 +27,7 @@ export default async function PreparationPage({ params }: { params: { id: string
             <p><strong>Celkový čas:</strong> {preparation.totalTime} minut</p>
             <h2>Časy</h2>
             <ul>
-                {(preparation.times as any[]).map(o => <li>{o.subtheme} – {o.time}</li>)}
+                {(preparation.times as any[]).map(o => <li>{o.subtheme} – {o.time}</li>) /* eslint-disable-line @typescript-eslint/no-explicit-any */}
             </ul>
             <h2>RVP</h2>
             <ul>

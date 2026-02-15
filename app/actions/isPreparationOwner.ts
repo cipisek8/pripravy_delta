@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { cookies } from 'next/headers'
 import prisma from '@/lib/prisma'
 
 export async function isPreparationOwner(preparationId: string) {

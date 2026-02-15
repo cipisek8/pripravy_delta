@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
 
   const remotePath = `${user.id}/${file.name}`;
 
-  const { data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from('PDFs')
     .upload(remotePath, buffer, { cacheControl: '3600', upsert: true, contentType: file.type});
 

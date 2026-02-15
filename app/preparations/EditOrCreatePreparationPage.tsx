@@ -38,7 +38,7 @@ type PreparationFormValues = {
     uploaded?: boolean
 }
 
-type PreparationInitialData = Partial<PreparationFormValues> & { id?: string }
+export type PreparationInitialData = Partial<PreparationFormValues> & { id?: string }
 
 export default function EditOrCreatePreparationPage({ initialData }: { initialData?: PreparationInitialData }) {
     const [previewContent, setPreviewContent] = useState('')

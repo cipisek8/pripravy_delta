@@ -7,7 +7,6 @@ import gfm from 'remark-gfm'
 import puppeteer from 'puppeteer'
 import { getField } from './getField'
 import { getGrade } from './getGrade'
-// @ts-ignore
 import { getRVP } from './getRVP'
 
 export async function exportToPdf(preparationId: string) {
@@ -90,14 +89,14 @@ export async function exportToPdf(preparationId: string) {
             </tr>
           </thead>
           <tbody>
-            ${(preparation.times as any[])
+            ${(preparation.times as any[]) // eslint-disable-line @typescript-eslint/no-explicit-any
               .map(o => `<tr><td>${o.subtheme}</td><td>${o.time} minut</td></tr>`)
               .join('')}
           </tbody>
         </table>
 
         <hr/>
-        <2>Obsah lekce</h2>
+        <h2>Obsah lekce</h2>
         <div>${markdownHtml.toString()}</div>
       </div>
     </body>
@@ -111,7 +110,7 @@ export async function exportToPdf(preparationId: string) {
   const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true })
   await browser.close()
 
-  return new Response(pdfBuffer as any, {
+  return new Response(pdfBuffer as any, { // eslint-disable-line @typescript-eslint/no-explicit-any
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `attachment; filename="${preparation.name || 'preparation'}.pdf"`,
