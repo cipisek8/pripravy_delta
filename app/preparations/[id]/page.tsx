@@ -7,7 +7,7 @@ import { getGrade } from '@/app/actions/getGrade'
 import { getRVP } from '@/app/actions/getRVP'
 /* eslint-disable react/jsx-key */   
 
-export default async function PreparationPage({ params }: { params: { id: string } }) {
+export default async function PreparationPage({ params }: { params: Promise<{ id: string }> }) {
   const parameters = await params
   const preparation = parameters.id !== 'new' ? await getPreparation(parameters.id) : null;
 
@@ -48,7 +48,7 @@ export default async function PreparationPage({ params }: { params: { id: string
       <div className="prose" dangerouslySetInnerHTML={{ __html: htmlPreview }} />
 
       <a
-        href={`/preparations/${await parameters.id}/export`}
+        href={`/preparations/${parameters.id}/export`}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-4 inline-block bg-gray-700 text-white px-4 py-2 rounded"
