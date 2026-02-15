@@ -9,11 +9,12 @@ import { FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default async function ReviewsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default async function ReviewsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+  const params = await searchParams
   const filters = {
-  gradeId: searchParams.gradeId,
-  fieldId: searchParams.fieldId,
-  name: searchParams.name,
+  gradeId: params.gradeId,
+  fieldId: params.fieldId,
+  name: params.name,
 }
   const preparations = await getReviewingPreparations(filters);
   if(await getRole() !== 'reviewer') return (<><h1>nemate pristup</h1></>)
