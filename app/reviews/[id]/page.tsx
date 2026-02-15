@@ -6,7 +6,7 @@ import { getRVP } from '@/app/actions/getRVP'
 import { getRole } from '@/app/actions/getRole'
 /* eslint-disable react/jsx-key */   
 
-export default async function PreparationPage({ params }: { params: { id: string } }) {
+export default async function PreparationPage({ params }: { params: Promise<{ id: string }> }) {
     const parameters = await params
     const preparation = parameters.id !== 'new' ? await getPreparation(parameters.id) : null;
 
@@ -39,19 +39,19 @@ export default async function PreparationPage({ params }: { params: { id: string
             <div className="prose" dangerouslySetInnerHTML={{ __html: htmlPreview }} />
 
             <a
-                href={`/preparations/${await parameters.id}/export`}
+                href={`/preparations/${parameters.id}/export`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-block bg-gray-700 text-white px-4 py-2 rounded"
             >
                 Export PDF
             </a>
-            <form method="post" action={`/reviews/${await parameters.id}/accept`} className="inline-block">
+            <form method="post" action={`/reviews/${parameters.id}/accept`} className="inline-block">
                 <button type="submit" className="mt-4 inline-block bg-green-500 text-white px-4 py-2 rounded">
                     Přijmou přípravu
                 </button>
             </form>
-            <form method="post" action={`/reviews/${await parameters.id}/deny`} className="inline-block">
+            <form method="post" action={`/reviews/${parameters.id}/deny`} className="inline-block">
                 <button type="submit" className="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded">
                     Odmítnout přípravu
                 </button>
