@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const DeleteButton = ({ filePath }: { filePath: string }) => {
 const [loading, setLoading] = useState(false);
@@ -26,12 +28,14 @@ const [loading, setLoading] = useState(false);
   };
 
     return (
-    <button
+    <Button
       onClick={handleDelete}
       disabled={loading}
-      className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+      variant="destructive"
+      className="flex items-center gap-2"
     >
-      {loading ? "Deleting..." : "Delete"}
-    </button>
+      <Trash2 className="h-4 w-4" />
+      {loading ? "Mažu…" : "Smazat"}
+    </Button>
   );
 };
