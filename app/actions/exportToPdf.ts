@@ -127,9 +127,9 @@ export async function exportToPdf(preparationId: string) {
   })
 }
 
-async function launchBrowser() {
+async function launchBrowser() { // eslint-disable-line @typescript-eslint/no-unused-vars
   if (process.env.VERCEL) {
-    const chromium = await import('@sparticuz/chromium')
+    const chromium = await import('@sparticuz/chromium-min')
     const puppeteerCore = await import('puppeteer-core')
 
     const headlessType = 'shell'
