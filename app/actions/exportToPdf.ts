@@ -108,9 +108,9 @@ export async function exportToPdf(preparationId: string) {
   const browser = isVercel
     ? await puppeteerCore.launch({
         args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
+        defaultViewport: null,
         executablePath: await chromium.executablePath(),
-        headless: chromium.headless,
+        headless: true,
       })
     : await (await import('puppeteer')).default.launch({ headless: true })
   const page = await browser.newPage()
