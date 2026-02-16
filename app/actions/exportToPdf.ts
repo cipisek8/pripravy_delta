@@ -127,20 +127,20 @@ export async function exportToPdf(preparationId: string) {
   })
 }
 
-// async function launchBrowser() { // eslint-disable-line @typescript-eslint/no-unused-vars
-//   if (process.env.VERCEL) {
-//     const chromium = await import('@sparticuz/chromium-min')
-//     const puppeteerCore = await import('puppeteer-core')
+async function launchBrowser() { // eslint-disable-line @typescript-eslint/no-unused-vars
+  if (process.env.VERCEL) {
+    const chromium = await import('@sparticuz/chromium-min')
+    const puppeteerCore = await import('puppeteer-core')
 
-//     const headlessType = 'shell'
+    const headlessType = 'shell'
 
-//     return puppeteerCore.default.launch({
-//       args: puppeteerCore.default.defaultArgs({ args: chromium.default.args, headless: headlessType }),
-//       defaultViewport: chromium.default.defaultViewport,
-//       executablePath: await chromium.default.executablePath(),
-//       headless: headlessType,
-//     })
-//   }
+    return puppeteerCore.default.launch({
+      args: puppeteerCore.default.defaultArgs({ args: chromium.default.args, headless: headlessType }),
+      defaultViewport: null,
+      executablePath: await chromium.default.executablePath(),
+      headless: headlessType,
+    })
+  }
 
-//   return puppeteer.launch({ headless: true })
-// }
+  return puppeteerCore.launch({ headless: true })
+}
