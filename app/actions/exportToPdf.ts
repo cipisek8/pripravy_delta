@@ -103,7 +103,7 @@ export async function exportToPdf(preparationId: string) {
   </html>
   `
 
- const browser = await puppeteer.launch({ headless: true })
+  const browser = await launchBrowser()
   const page = await browser.newPage()
   await page.setContent(htmlPage, { waitUntil: 'networkidle0' })
 
@@ -116,4 +116,20 @@ export async function exportToPdf(preparationId: string) {
       'Content-Disposition': `attachment; filename="${preparation.name || 'preparation'}.pdf"`,
     },
   })
+}
+
+async function launchBrowser() {
+  if (process.env.VERCEL) {
+    const chromium = await import('@sparticuz/chromium')
+    const puppeteerCore = await import('puppeteer-core')
+
+    return puppeteerCore.default.launch({
+      args: chromium.default.args,
+      defaultViewport: chromium.default.defaultViewport,
+      executablePath: await chromium.default.executablePath(),
+      headless: chromium.default.headless,
+    })
+  }
+
+  return puppeteer.launch({ headless: true })
 }
