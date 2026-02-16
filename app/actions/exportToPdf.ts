@@ -126,3 +126,21 @@ export async function exportToPdf(preparationId: string) {
     },
   })
 }
+
+async function launchBrowser() {
+  if (process.env.VERCEL) {
+    const chromium = await import('@sparticuz/chromium')
+    const puppeteerCore = await import('puppeteer-core')
+
+    const headlessType = 'shell'
+
+    return puppeteerCore.default.launch({
+      args: puppeteerCore.default.defaultArgs({ args: chromium.default.args, headless: headlessType }),
+      defaultViewport: chromium.default.defaultViewport,
+      executablePath: await chromium.default.executablePath(),
+      headless: headlessType,
+    })
+  }
+
+  return puppeteer.launch({ headless: true })
+}
