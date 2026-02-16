@@ -4,7 +4,8 @@ import prisma from '@/lib/prisma'
 import { remark } from 'remark'
 import html from 'remark-html'
 import gfm from 'remark-gfm'
-import puppeteer from 'puppeteer'
+import chromium from '@sparticuz/chromium-min'
+import puppeteerCore from 'puppeteer-core'
 import { getField } from './getField'
 import { getGrade } from './getGrade'
 import { getRVP } from './getRVP'
@@ -103,7 +104,15 @@ export async function exportToPdf(preparationId: string) {
   </html>
   `
 
- const browser = await puppeteer.launch({ headless: true })
+  const isVercel = Boolean(process.env.VERCEL)
+  const browser = isVercel
+    ? await puppeteerCore.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+      })
+    : await (await import('puppeteer')).default.launch({ headless: true })
   const page = await browser.newPage()
   await page.setContent(htmlPage, { waitUntil: 'networkidle0' })
 
