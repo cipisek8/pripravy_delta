@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma'
 import { remark } from 'remark'
 import html from 'remark-html'
 import gfm from 'remark-gfm'
-import chromium from '@sparticuz/chromium-min'
+import chromium from '@sparticuz/chromium'
 import puppeteerCore from 'puppeteer-core'
 import { getField } from './getField'
 import { getGrade } from './getGrade'
@@ -129,7 +129,7 @@ export async function exportToPdf(preparationId: string) {
 
 async function launchBrowser() { // eslint-disable-line @typescript-eslint/no-unused-vars
   if (process.env.VERCEL) {
-    const chromium = await import('@sparticuz/chromium-min')
+    const chromium = await import('@sparticuz/chromium')
     const puppeteerCore = await import('puppeteer-core')
 
     const headlessType = 'shell'
