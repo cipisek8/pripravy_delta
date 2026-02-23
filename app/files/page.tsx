@@ -48,7 +48,7 @@ export default async function page() {
                                             </div>
                                             <div>
                                                 <CardTitle className="text-xl">{fileName}</CardTitle>
-                                                <CardDescription className="mt-1.5 break-all">{file.name}</CardDescription>
+                                                <CardDescription className="mt-1.5 break-all">{"["+ fileName + "]" + "(" + url + ")"}</CardDescription>
                                             </div>
                                         </div>
                                     </div>
