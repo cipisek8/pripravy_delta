@@ -4,9 +4,16 @@ import { renderMarkdown } from '@/app/actions/renderMarkdown'
 import { getGrade } from '@/app/actions/getGrade'
 import { getRVP } from '@/app/actions/getRVP'
 import { getRole } from '@/app/actions/getRole'
+import { createClient } from '@/lib/supabase/server'
 /* eslint-disable react/jsx-key */   
 
 export default async function PreparationPage({ params }: { params: Promise<{ id: string }> }) {
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.getClaims();
+    if (error || !data?.claims) {
+        return <h1>Nemáte přístup. Musíte být přihlášeni.</h1>;
+    }
+
     const parameters = await params
     const preparation = parameters.id !== 'new' ? await getPreparation(parameters.id) : null;
 

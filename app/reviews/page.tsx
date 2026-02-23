@@ -8,8 +8,15 @@ import Link from 'next/link';
 import { FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { createClient } from '@/lib/supabase/server';
 
 export default async function ReviewsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.getClaims();
+  if (error || !data?.claims) {
+    return <h1>Nemáte přístup. Musíte být přihlášeni.</h1>;
+  }
+
   const params = await searchParams
   const filters = {
   gradeId: params.gradeId,
@@ -17,7 +24,7 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
   name: params.name,
 }
   const preparations = await getReviewingPreparations(filters);
-  if(await getRole() !== 'reviewer') return (<><h1>nemate pristup</h1></>)
+  if(await getRole() !== 'reviewer') return (<><h1>Nemáte přístup</h1></>)
 
   return (
     <div>

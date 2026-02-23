@@ -8,6 +8,8 @@ export async function isPreparationOwner(preparationId: string) {
 
   const { data } = await supabase.auth.getClaims();
 
+  if (!data?.claims) return { isOwner: false }
+
   const preparation = await prisma.preparations.findUnique({
     where: {
       id: preparationId,

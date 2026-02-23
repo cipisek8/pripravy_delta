@@ -3,8 +3,15 @@ import { DeleteButton } from "./deleteButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, ExternalLink } from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function page() {
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.getClaims();
+    if (error || !data?.claims) {
+        return <h1>Nemáte přístup. Musíte být přihlášeni.</h1>;
+    }
+
     const files = await getFiles();
 
     return (
