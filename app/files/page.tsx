@@ -2,8 +2,9 @@ import { getFiles } from "@/app/actions/getFiles"
 import { DeleteButton } from "./deleteButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, ExternalLink } from "lucide-react";
+import { FileText, ExternalLink, Upload } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 export default async function page() {
     const supabase = await createClient();
@@ -17,7 +18,15 @@ export default async function page() {
     return (
         <div>
             <div className="mb-8">
-                <h1 className="text-3xl mb-2">Soubory</h1>
+                <div className="flex items-center justify-between gap-4 mb-4">
+                    <h1 className="text-3xl">Soubory</h1>
+                    <Link href="/files/upload">
+                        <Button className="flex items-center gap-2">
+                            <Upload className="h-4 w-4" />
+                            Nahrát soubor
+                        </Button>
+                    </Link>
+                </div>
                 <p className="text-gray-600">PDF uložené v Supabase Storage</p>
             </div>
 
