@@ -1,8 +1,10 @@
-import { Edit } from "lucide-react";
+import { Edit, Plus } from "lucide-react";
+import Link from "next/link";
 
 import { AppNavigationLinks } from "@/components/app-navigation-links";
 import { AuthButton } from "@/components/auth-button";
 import { AuthRefresh } from "@/components/auth-refresh";
+import { Button } from "@/components/ui/button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { hasEnvVars } from "@/lib/utils";
 
@@ -17,7 +19,13 @@ export function AppNavigation() {
 
         <AppNavigationLinks />
 
-        <div className="ml-auto flex items-center">
+        <div className="ml-auto flex items-center gap-4">
+          <Button asChild variant="default" size="sm">
+            <Link href="/preparations/create">
+              <Plus className="h-4 w-4" />
+              Vytvořit
+            </Link>
+          </Button>
           <AuthRefresh />
           {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
         </div>
