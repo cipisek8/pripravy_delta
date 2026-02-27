@@ -1,4 +1,4 @@
-import { getPreparations } from '@/app/actions/getPreparations'
+import { getAllPreparations } from '@/app/actions/getAllPreparations'
 import { FieldOptions } from '@/components/field-options';
 import { getField } from '@/app/actions/getField';
 import { getGrade } from '@/app/actions/getGrade';
@@ -8,25 +8,20 @@ import { FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default async function PreparationsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+export default async function AllPreparationsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const params = await searchParams
   const filters = {
   gradeId: params.gradeId,
   fieldId: params.fieldId,
   name: params.name,
 }
-  const preparations = await getPreparations(filters);
+  const preparations = await getAllPreparations(filters);
 
   return (
     <div>
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl mb-2">Přípravy</h1>
-          <p className="text-gray-600">Správa a export příprav</p>
-        </div>
-        <Button asChild>
-          <Link href="/preparations/all">Všechny přípravy</Link>
-        </Button>
+      <div className="mb-8">
+        <h1 className="text-3xl mb-2">Všechny přípravy</h1>
+        <p className="text-gray-600">Správa a export všech příprav bez ohledu na stav zveřejnění</p>
       </div>
 
       <Card className="mb-6">
